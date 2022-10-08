@@ -3,17 +3,17 @@ package ru.job4j.iterator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ArrayIt implements Iterator<Integer> {
-    private final int[] date;
+public class BackwardArrayIt implements Iterator<Integer> {
+    private final int[] data;
     private int point = 0;
 
-    public ArrayIt(int[] date) {
-        this.date = date;
+    public BackwardArrayIt(int[] data) {
+        this.data = data;
     }
 
     @Override
     public boolean hasNext() {
-        return point < date.length;
+        return point < data.length;
     }
 
     @Override
@@ -21,6 +21,7 @@ public class ArrayIt implements Iterator<Integer> {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        return date[point++];
+        point++;
+        return data[data.length - point];
     }
 }
