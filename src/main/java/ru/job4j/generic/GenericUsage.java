@@ -1,6 +1,5 @@
-package ru.job4j.generics;
+package ru.job4j.generic;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
