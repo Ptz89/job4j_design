@@ -13,13 +13,17 @@ public class SimpleArrayList<T> implements SimpleList<T> {
         this.container = (T[]) new Object[capacity];
     }
 
-    @Override
-    public void add(T value) {
+    private void checkSize() {
         if (size == 0) {
             container = (T[]) new Object[1];
         } else if (size == container.length) {
             container = Arrays.copyOf(container, container.length * 2);
         }
+    }
+
+    @Override
+    public void add(T value) {
+        checkSize();
         container[size] = value;
         modCount++;
         size++;
@@ -67,14 +71,14 @@ public class SimpleArrayList<T> implements SimpleList<T> {
 
             @Override
             public boolean hasNext() {
+                if (modCount != expectedModCount) {
+                    throw new ConcurrentModificationException("Во время обхода коллекции она была изменена");
+                }
                 return index < size;
             }
 
             @Override
             public T next() {
-                if (modCount != expectedModCount) {
-                    throw new ConcurrentModificationException("Во время обхода коллекции она была изменена");
-                }
                 if (!hasNext()) {
                     throw new NoSuchElementException("Элемента не существует");
                 }
