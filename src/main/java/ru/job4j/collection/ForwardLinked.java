@@ -1,6 +1,5 @@
 package ru.job4j.collection;
 
-import javax.print.attribute.standard.SheetCollate;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -34,6 +33,10 @@ public class ForwardLinked<T> implements Iterable<T> {
         head.next = null;
         head = node;
         return tmp;
+    }
+
+    public boolean isEmpty() {
+        return head == null;
     }
 
     @Override
