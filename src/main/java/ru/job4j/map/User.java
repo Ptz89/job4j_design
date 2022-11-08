@@ -23,13 +23,13 @@ public class User {
         }
         User user = (User) o;
         return children == user.children
-                && Objects.equals(name, user.name)
-                && Objects.equals(birthday, user.birthday);
+                && name.equals(user.name)
+                && birthday.equals(user.birthday);
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return Objects.hash(name, children, birthday);
     }
 
     public static void main(String[] args) {
