@@ -26,8 +26,10 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public V get(K key) {
         final MapEntry<K, V> entry = table[indexFor(key)];
-        return isKeysEquals(key, entry.key) ? entry.value : null;
-
+        if (entry != null) {
+            return isKeysEquals(key, entry.key) ? entry.value : null;
+        }
+        return null;
     }
 
     @Override
@@ -65,9 +67,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
             }
         };
     }
-    public int size() {
-        return count;
-    }
+
     private int hash(int hashCode) {
         return hashCode ^ (hashCode >>> 16);
     }
@@ -77,7 +77,9 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     private boolean isKeysEquals(K key1, K key2) {
         return key1 == key2
-                || key1 != null && key1.hashCode() == key2.hashCode() && key1.equals(key2);
+                || (key1 != null && key2 != null
+                && key1.hashCode() == key2.hashCode()
+                && key1.equals(key2));
     }
 
     private void expand() {
@@ -85,10 +87,13 @@ public class SimpleMap<K, V> implements Map<K, V> {
         capacity <<= 1;
         table = new MapEntry[capacity];
         for (MapEntry<K, V> entry : oldTable) {
-            final int i = indexFor(entry.key);
-            table[i] = new MapEntry<>(entry.key, entry.value);
+            if (entry != null) {
+                final int i = indexFor(entry.key);
+                table[i] = new MapEntry<>(entry.key, entry.value);
+            }
         }
     }
+
     private static class MapEntry<K, V> {
         private K key;
         private V value;
