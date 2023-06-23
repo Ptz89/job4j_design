@@ -6,6 +6,7 @@ import java.nio.file.Path;
 
 public class DuplicatesFinder {
     public static void main(String[] args) throws IOException {
+
         DuplicatesVisitor visitor = new DuplicatesVisitor();
         Files.walkFileTree(Path.of("C:\\projects\\job4j_design\\"), visitor);
         visitor.printDuplicates();
